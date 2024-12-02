@@ -7,3 +7,5 @@ commands:
     description: Canvas command
   pallet:
     description: Pallet command
+  blockwhitelist:
+    description: Block whitelist command

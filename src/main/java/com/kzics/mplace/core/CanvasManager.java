@@ -1,16 +1,28 @@
 package com.kzics.mplace.core;
 
+import com.kzics.mplace.Main;
 import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.config.CanvasState;
+import com.kzics.mplace.storage.CanvasStorage;
 import com.kzics.mplace.visual.CanvasVisualizer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+
+import java.io.File;
 
 public class CanvasManager {
     private Canvas canvas;
     private final CanvasVisualizer visualizer = new CanvasVisualizer();
     private final BlockWhitelist blockWhitelist = new BlockWhitelist();
+    private final CanvasStorage storage;
+
+    public CanvasManager(Main main) {
+        File dataFolder = main.getDataFolder();
+        storage = new CanvasStorage(dataFolder);
+        this.storage.loadCanvas();
+    }
 
     public void initializeCanvas(CanvasConfiguration config) {
         if (canvas != null) {
@@ -32,6 +44,19 @@ public class CanvasManager {
         }
     }
 
+    public void saveData() {
+        if (canvas != null) {
+            storage.saveCanvas(canvas, blockWhitelist.allowedBlocks());
+        }
+    }
+
+    public void loadData() {
+        this.canvas = storage.loadCanvas();
+        this.blockWhitelist.clearWhitelist();
+        for (Material material : storage.loadBlockWhitelist()) {
+            this.blockWhitelist.addBlock(material);
+        }
+    }
 
 
     public Canvas canvas() {

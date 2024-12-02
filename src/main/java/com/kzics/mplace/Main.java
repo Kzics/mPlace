@@ -2,6 +2,7 @@ package com.kzics.mplace;
 
 import com.kzics.mplace.command.canvas.CanvasCommand;
 import com.kzics.mplace.command.pallet.PalletCommand;
+import com.kzics.mplace.command.whitelist.BlockWhitelistCommand;
 import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.core.CanvasManager;
 import com.kzics.mplace.core.CooldownManager;
@@ -21,15 +22,26 @@ public class Main extends JavaPlugin {
     private void registerCommands() {
         getCommand("canvas").setExecutor(new CanvasCommand(canvasManager));
         getCommand("pallet").setExecutor(new PalletCommand(canvasManager));
+        getCommand("blockwhitelist").setExecutor(new BlockWhitelistCommand(canvasManager));
+        getCommand("blockwhitelist").setTabCompleter(new BlockWhitelistCommand(canvasManager));
     }
 
     @Override
     public void onEnable() {
-        canvasManager = new CanvasManager();
+        if(!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+        canvasManager = new CanvasManager(this);
         cooldownManager = new CooldownManager(5000);
         registerListeners();
         registerCommands();
-        canvasManager.blockWhitelist().addBlock(Material.DIRT);
+        canvasManager.loadData();
+        //canvasManager.blockWhitelist().addBlock(Material.DIRT);
+    }
+
+    @Override
+    public void onDisable() {
+        canvasManager.saveData();
     }
 
     public CanvasManager canvasManager() {
