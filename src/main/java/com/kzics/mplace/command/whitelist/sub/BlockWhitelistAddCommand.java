@@ -2,6 +2,8 @@ package com.kzics.mplace.command.whitelist.sub;
 
 import com.kzics.mplace.command.ICommand;
 import com.kzics.mplace.core.CanvasManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -45,11 +47,11 @@ public class BlockWhitelistAddCommand implements ICommand, TabCompleter {
         try {
             material = Material.valueOf(block.toUpperCase());
         } catch (IllegalArgumentException e) {
-            sender.sendMessage("Invalid block: " + block);
+            sender.sendMessage(Component.text("Invalid block: " + block, NamedTextColor.RED));
             return;
         }
         canvasManager.blockWhitelist().addBlock(material);
-        sender.sendMessage("Block " + material.name() + " added to the whitelist.");
+        sender.sendMessage(Component.text("Block " + material.name() + " added to the whitelist.", NamedTextColor.GREEN));
     }
 
     @Override

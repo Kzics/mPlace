@@ -63,7 +63,7 @@ public class CanvasManager {
 
     public void clearCanvas() {
         if (canvas != null) {
-            visualizer.clearCanvas(canvas.center(), canvas.size());
+            visualizer.renderCanvas(canvas.center(), canvas.size());
         }
     }
 

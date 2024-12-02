@@ -31,12 +31,12 @@ public class BlockWhitelistRemoveCommand implements ICommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (args.length != 1) {
+        if (args.length != 2) {
             sender.sendMessage("Invalid arguments");
             return;
         }
 
-        String block = args[0];
+        String block = args[1];
         Material material;
         try {
             material = Material.valueOf(block.toUpperCase());
