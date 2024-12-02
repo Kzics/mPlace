@@ -31,7 +31,7 @@ public class CanvasExpandCommand implements ICommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length != 2) {
-            sender.sendMessage("Invalid arguments");
+            sender.sendMessage(Component.text("Invalid cooldown", NamedTextColor.RED));
             return;
         }
 
@@ -39,7 +39,7 @@ public class CanvasExpandCommand implements ICommand {
         try {
             size = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage("Invalid size");
+            sender.sendMessage(Component.text("Invalid size", NamedTextColor.RED));
             return;
         }
         canvasManager.updateCanvasScale(size);

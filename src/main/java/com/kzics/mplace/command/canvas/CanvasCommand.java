@@ -1,7 +1,10 @@
 package com.kzics.mplace.command.canvas;
 
+import com.kzics.mplace.Main;
 import com.kzics.mplace.command.CommandBase;
 import com.kzics.mplace.command.ICommand;
+import com.kzics.mplace.command.canvas.sub.CanvasClearCommand;
+import com.kzics.mplace.command.canvas.sub.CanvasCooldownCommand;
 import com.kzics.mplace.command.canvas.sub.CanvasExpandCommand;
 import com.kzics.mplace.command.canvas.sub.CanvasStateCommand;
 import com.kzics.mplace.core.CanvasManager;
@@ -16,9 +19,11 @@ import java.util.List;
 
 public class CanvasCommand extends CommandBase implements TabCompleter {
 
-    public CanvasCommand(CanvasManager canvasManager) {
-        registerSubCommand("state", new CanvasStateCommand(canvasManager));
-        registerSubCommand("expand", new CanvasExpandCommand(canvasManager));
+    public CanvasCommand(Main main) {
+        registerSubCommand("state", new CanvasStateCommand(main.canvasManager()));
+        registerSubCommand("expand", new CanvasExpandCommand(main.canvasManager()));
+        registerSubCommand("cooldown", new CanvasCooldownCommand(main.cooldownManager()));
+        registerSubCommand("clear", new CanvasClearCommand(main.canvasManager()));
     }
 
     @Override

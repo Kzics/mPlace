@@ -71,7 +71,6 @@ public class CanvasStorage {
         Canvas canvas = new Canvas(configuration);
         canvas.state(state);
         canvas.updateSize(size / (double) initialSize);
-
         return canvas;
     }
 

@@ -19,6 +19,9 @@ public class CanvasManager {
     private final CanvasStorage storage;
 
     public CanvasManager(Main main) {
+        if(!main.getDataFolder().exists()) {
+            main.getDataFolder().mkdir();
+        }
         File dataFolder = main.getDataFolder();
         storage = new CanvasStorage(dataFolder);
         this.storage.loadCanvas();
@@ -58,6 +61,11 @@ public class CanvasManager {
         }
     }
 
+    public void clearCanvas() {
+        if (canvas != null) {
+            visualizer.clearCanvas(canvas.center(), canvas.size());
+        }
+    }
 
     public Canvas canvas() {
         return canvas;

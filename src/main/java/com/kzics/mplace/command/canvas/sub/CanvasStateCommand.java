@@ -3,6 +3,8 @@ package com.kzics.mplace.command.canvas.sub;
 import com.kzics.mplace.command.ICommand;
 import com.kzics.mplace.config.CanvasState;
 import com.kzics.mplace.core.CanvasManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 
 public class CanvasStateCommand implements ICommand {
@@ -30,7 +32,7 @@ public class CanvasStateCommand implements ICommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length != 1) {
-            sender.sendMessage("Invalid arguments");
+            sender.sendMessage(Component.text("Invalid cooldown", NamedTextColor.RED));
             return;
         }
 
@@ -39,7 +41,7 @@ public class CanvasStateCommand implements ICommand {
         try {
             canvasState = CanvasState.valueOf(state.toUpperCase());
         } catch (IllegalArgumentException e) {
-            sender.sendMessage("Invalid state");
+            sender.sendMessage(Component.text("Invalid state", NamedTextColor.RED));
             return;
         }
         switch (canvasState) {
@@ -53,7 +55,7 @@ public class CanvasStateCommand implements ICommand {
                 canvasManager.pauseCanvas();
                 break;
             default:
-                sender.sendMessage("Invalid state");
+                sender.sendMessage(Component.text("Invalid state", NamedTextColor.RED));
         }
     }
 }

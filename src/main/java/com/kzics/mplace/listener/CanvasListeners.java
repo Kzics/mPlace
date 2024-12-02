@@ -4,6 +4,8 @@ import com.kzics.mplace.Main;
 import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.core.CanvasManager;
 import com.kzics.mplace.core.CooldownManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -37,7 +39,7 @@ public class CanvasListeners implements Listener {
 
         if (!cooldownManager.canPlaceBlock(playerId)) {
             long remaining = cooldownManager.getTimeRemaining(playerId) / 1000;
-            player.sendMessage("Vous devez attendre " + remaining + " secondes avant de placer un autre bloc !");
+            player.sendMessage(Component.text("You must wait " + remaining + " seconds before placing another block", NamedTextColor.RED));
             event.setCancelled(true);
             return;
         }
@@ -46,17 +48,17 @@ public class CanvasListeners implements Listener {
         Material blockType = event.getBlock().getType();
 
         if (!canvasManager.canvas().isWithinBounds(location)) {
-            player.sendMessage("Vous ne pouvez pas placer de blocs en dehors du canvas !");
+            player.sendMessage(Component.text("You can only place blocks within the canvas", NamedTextColor.RED));
             event.setCancelled(true);
             return;
         }
         if (!canvasManager.blockWhitelist().isAllowed(blockType)) {
-            player.sendMessage("Ce type de bloc n'est pas autorisé !");
+            player.sendMessage(Component.text("You can only place whitelisted blocks", NamedTextColor.RED));
             event.setCancelled(true);
             return;
         }
 
-        player.sendMessage("Bloc placé avec succès !");
+        player.sendMessage(Component.text("Block placed", NamedTextColor.GREEN));
         location.getBlock().getRelative(BlockFace.DOWN).setType(blockType);
         event.setCancelled(true);
     }
@@ -71,9 +73,6 @@ public class CanvasListeners implements Listener {
 
         if(!canvasManager.isCanvasSet()) {
             canvasManager.initializeCanvas(canvasConfig);
-        } else {
-            canvasManager.updateCanvasScale(1.25 * t);
-            t++;
         }
     }
 }

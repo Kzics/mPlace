@@ -7,6 +7,7 @@ import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.core.CanvasManager;
 import com.kzics.mplace.core.CooldownManager;
 import com.kzics.mplace.listener.CanvasListeners;
+import com.kzics.mplace.tasks.CanvasTask;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,7 +21,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CanvasListeners(this), this);
     }
     private void registerCommands() {
-        getCommand("canvas").setExecutor(new CanvasCommand(canvasManager));
+        getCommand("canvas").setExecutor(new CanvasCommand(this));
         getCommand("pallet").setExecutor(new PalletCommand(canvasManager));
         getCommand("blockwhitelist").setExecutor(new BlockWhitelistCommand(canvasManager));
         getCommand("blockwhitelist").setTabCompleter(new BlockWhitelistCommand(canvasManager));
@@ -28,15 +29,12 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if(!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
         canvasManager = new CanvasManager(this);
         cooldownManager = new CooldownManager(5000);
         registerListeners();
         registerCommands();
         canvasManager.loadData();
-        //canvasManager.blockWhitelist().addBlock(Material.DIRT);
+        new CanvasTask(this).runTaskTimer(this, 0, 20);
     }
 
     @Override
