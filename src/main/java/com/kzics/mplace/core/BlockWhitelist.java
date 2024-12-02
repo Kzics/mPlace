@@ -20,11 +20,24 @@ public class BlockWhitelist {
         return allowedBlocks.contains(material);
     }
 
-    public Set<Material> getAllowedBlocks() {
+    public Set<Material> allowedBlocks() {
         return Set.copyOf(allowedBlocks);
     }
 
     public void clearWhitelist() {
         allowedBlocks.clear();
     }
+
+    public void addBlocks(Material... materials) {
+        for (Material material : materials) {
+            addBlock(material);
+        }
+    }
+
+    public void removeBlocks(Material... materials) {
+        for (Material material : materials) {
+            removeBlock(material);
+        }
+    }
+
 }

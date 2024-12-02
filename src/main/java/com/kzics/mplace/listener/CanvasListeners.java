@@ -61,6 +61,7 @@ public class CanvasListeners implements Listener {
         event.setCancelled(true);
     }
 
+    private int t = 1;
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -71,7 +72,8 @@ public class CanvasListeners implements Listener {
         if(!canvasManager.isCanvasSet()) {
             canvasManager.initializeCanvas(canvasConfig);
         } else {
-            canvasManager.updateCanvasScale(canvasManager.canvas().scaleFactor() * 1.25);
+            canvasManager.updateCanvasScale(1.25 * t);
+            t++;
         }
     }
 }

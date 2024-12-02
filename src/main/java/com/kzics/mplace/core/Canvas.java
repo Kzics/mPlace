@@ -7,12 +7,14 @@ import org.bukkit.Location;
 public class Canvas {
     private Location center;
     private int size;
+    private final int initialSize; // Nouvelle variable pour stocker la taille initiale
     private double scaleFactor;
     private CanvasState state;
 
     public Canvas(CanvasConfiguration config) {
         this.center = config.centerLocation();
         this.size = config.initialSize();
+        this.initialSize = config.initialSize(); // Initialiser avec la taille initiale
         this.scaleFactor = config.scaleFactor();
         this.state = CanvasState.ACTIVE;
     }
@@ -29,8 +31,12 @@ public class Canvas {
         return size;
     }
 
+    public int initialSize() {
+        return initialSize;
+    }
+
     public void updateSize(double factor) {
-        this.size = (int) (this.size * factor);
+        this.size = (int) (this.initialSize * factor); // Basé sur la taille initiale
     }
 
     public double scaleFactor() {
