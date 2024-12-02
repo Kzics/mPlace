@@ -5,6 +5,7 @@ import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.config.CanvasState;
 import com.kzics.mplace.core.CanvasManager;
 import com.kzics.mplace.core.CooldownManager;
+import com.kzics.mplace.menu.CanvasMenu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -14,7 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -71,13 +74,10 @@ public class CanvasListeners implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-
-        /*CanvasConfiguration canvasConfig = new CanvasConfiguration(player.getLocation(), 10, 5);
-
-        if(!canvasManager.isCanvasSet()) {
-            canvasManager.initializeCanvas(canvasConfig);
-        }*/
+    public void onClick(InventoryClickEvent event) {
+        Inventory inventory = event.getView().getTopInventory();
+        if(inventory.getHolder() instanceof CanvasMenu canvasMenu) {
+            canvasMenu.handle(event);
+        }
     }
 }
