@@ -1,42 +1,42 @@
-package com.kzics.mplace.command.whitelist.sub;
+package com.kzics.mplace.command.canvas.sub;
 
 import com.kzics.mplace.command.ICommand;
-import com.kzics.mplace.core.CanvasManager;
+import com.kzics.mplace.core.Canvas;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
-public class BlockWhitelistRemoveCommand implements ICommand {
+public class CanvasDefaultBlockCommand implements ICommand {
 
-    private final CanvasManager canvasManager;
-    public BlockWhitelistRemoveCommand(CanvasManager canvasManager) {
-        this.canvasManager = canvasManager;
+    private final Canvas canvas;
+    public CanvasDefaultBlockCommand(Canvas canvas) {
+        this.canvas = canvas;
+
     }
-
     @Override
     public String getName() {
-        return "remove";
+        return "default";
     }
 
     @Override
     public String getDescription() {
-        return "Remove a block from the whitelist";
+        return "Change the default block";
     }
 
     @Override
     public String getPermission() {
-        return "mplace.blockwhitelist.remove";
+        return "mplace.canvas.default";
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (args.length != 2) {
+        if (args.length != 1) {
             sender.sendMessage("Invalid arguments");
             return;
         }
 
-        String block = args[1];
+        String block = args[0];
         Material material;
         try {
             material = Material.valueOf(block.toUpperCase());
@@ -44,7 +44,7 @@ public class BlockWhitelistRemoveCommand implements ICommand {
             sender.sendMessage("Invalid block");
             return;
         }
-        canvasManager.blockWhitelist().removeBlock(material);
-        sender.sendMessage(Component.text("Block " + material.name() + " removed from the whitelist", NamedTextColor.GREEN));
+        canvas.defaultMaterial(material);
+        sender.sendMessage(Component.text("Default block set to " + block, NamedTextColor.GREEN));
     }
 }

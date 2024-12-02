@@ -96,4 +96,5 @@ public class CanvasManager {
     public BlockWhitelist blockWhitelist() {
         return blockWhitelist;
     }
+
 }

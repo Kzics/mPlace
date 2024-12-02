@@ -19,7 +19,9 @@ public class PalletCommand extends CommandBase {
         if (!(commandSender instanceof Player player)) {
             return false;
         }
-        new PalletMenu(canvasManager).open(player);
+        if(player.hasPermission("mplace.pallet")) {
+            new PalletMenu(canvasManager).open(player);
+        }
         return true;
     }
 }

@@ -32,7 +32,7 @@ public class BlockWhitelistAddCommand implements ICommand, TabCompleter {
 
     @Override
     public String getPermission() {
-        return "canvas.blockwhitelist.add";
+        return "mplace.blockwhitelist.add";
     }
 
     @Override

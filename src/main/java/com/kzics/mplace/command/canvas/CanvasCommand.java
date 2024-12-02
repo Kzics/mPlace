@@ -22,6 +22,7 @@ public class CanvasCommand extends CommandBase implements TabCompleter {
         registerSubCommand("cooldown", new CanvasCooldownCommand(main.cooldownManager()));
         registerSubCommand("clear", new CanvasClearCommand(main.canvasManager()));
         registerSubCommand("set", new CanvasSetCommand(main.canvasManager()));
+        registerSubCommand("default", new CanvasDefaultBlockCommand(main.canvasManager().canvas()));
     }
 
     @Override

@@ -35,6 +35,7 @@ public class CanvasStorage {
         config.set("canvas.initialSize", canvas.initialSize());
         config.set("canvas.scaleFactor", canvas.scaleFactor());
         config.set("canvas.state", canvas.state().name());
+        config.set("canvas.defaultMaterial", canvas.defaultMaterial().name());
 
         // Convertir la whitelist en une liste de noms
         List<String> whitelist = new ArrayList<>();
@@ -66,10 +67,13 @@ public class CanvasStorage {
         double scaleFactor = config.getDouble("canvas.scaleFactor");
         String stateName = config.getString("canvas.state");
         CanvasState state = CanvasState.valueOf(stateName);
+        String defaultMaterialName = config.getString("canvas.defaultMaterial");
+        Material defaultMaterial = Material.valueOf(defaultMaterialName);
 
-        CanvasConfiguration configuration = new CanvasConfiguration(center, initialSize, scaleFactor);
+        CanvasConfiguration configuration = new CanvasConfiguration(center,defaultMaterial, initialSize, scaleFactor);
         Canvas canvas = new Canvas(configuration);
         canvas.state(state);
+        canvas.defaultMaterial(defaultMaterial);
         canvas.updateSize(size / (double) initialSize);
         return canvas;
     }

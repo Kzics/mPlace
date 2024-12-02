@@ -3,6 +3,7 @@ package com.kzics.mplace.core;
 import com.kzics.mplace.config.CanvasConfiguration;
 import com.kzics.mplace.config.CanvasState;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 public class Canvas {
     private Location center;
@@ -10,6 +11,7 @@ public class Canvas {
     private final int initialSize;
     private double scaleFactor;
     private CanvasState state;
+    private Material defaultMaterial;
 
     public Canvas(CanvasConfiguration config) {
         this.center = config.centerLocation();
@@ -17,6 +19,7 @@ public class Canvas {
         this.initialSize = config.initialSize();
         this.scaleFactor = config.scaleFactor();
         this.state = CanvasState.ACTIVE;
+        this.defaultMaterial = config.defaultMaterial();
     }
 
     public Location center() {
@@ -53,6 +56,14 @@ public class Canvas {
 
     public void state(CanvasState state) {
         this.state = state;
+    }
+
+    public void defaultMaterial(Material material) {
+        this.defaultMaterial = material;
+    }
+
+    public Material defaultMaterial() {
+        return defaultMaterial;
     }
 
     public boolean isWithinBounds(Location location) {
