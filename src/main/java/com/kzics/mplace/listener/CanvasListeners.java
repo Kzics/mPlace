@@ -2,6 +2,7 @@ package com.kzics.mplace.listener;
 
 import com.kzics.mplace.Main;
 import com.kzics.mplace.config.CanvasConfiguration;
+import com.kzics.mplace.config.CanvasState;
 import com.kzics.mplace.core.CanvasManager;
 import com.kzics.mplace.core.CooldownManager;
 import net.kyori.adventure.text.Component;
@@ -31,8 +32,14 @@ public class CanvasListeners implements Listener {
         Player player = event.getPlayer();
         UUID playerId = player.getUniqueId();
 
+        if(canvasManager.canvas().state() == CanvasState.INACTIVE || canvasManager.canvas().state() == CanvasState.PAUSED) {
+            player.sendMessage(Component.text("Canvas is inactive/Paused", NamedTextColor.RED));
+            event.setCancelled(true);
+            return;
+        }
+
         if (!canvasManager.isCanvasSet()) {
-            player.sendMessage("Aucun canvas n'a été configuré !");
+            player.sendMessage(Component.text("Canvas is not set!"));
             event.setCancelled(true);
             return;
         }
@@ -63,16 +70,14 @@ public class CanvasListeners implements Listener {
         event.setCancelled(true);
     }
 
-    private int t = 1;
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        UUID playerId = player.getUniqueId();
 
-        CanvasConfiguration canvasConfig = new CanvasConfiguration(player.getLocation(), 10, 5);
+        /*CanvasConfiguration canvasConfig = new CanvasConfiguration(player.getLocation(), 10, 5);
 
         if(!canvasManager.isCanvasSet()) {
             canvasManager.initializeCanvas(canvasConfig);
-        }
+        }*/
     }
 }

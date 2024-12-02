@@ -3,10 +3,7 @@ package com.kzics.mplace.command.canvas;
 import com.kzics.mplace.Main;
 import com.kzics.mplace.command.CommandBase;
 import com.kzics.mplace.command.ICommand;
-import com.kzics.mplace.command.canvas.sub.CanvasClearCommand;
-import com.kzics.mplace.command.canvas.sub.CanvasCooldownCommand;
-import com.kzics.mplace.command.canvas.sub.CanvasExpandCommand;
-import com.kzics.mplace.command.canvas.sub.CanvasStateCommand;
+import com.kzics.mplace.command.canvas.sub.*;
 import com.kzics.mplace.core.CanvasManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +21,7 @@ public class CanvasCommand extends CommandBase implements TabCompleter {
         registerSubCommand("expand", new CanvasExpandCommand(main.canvasManager()));
         registerSubCommand("cooldown", new CanvasCooldownCommand(main.cooldownManager()));
         registerSubCommand("clear", new CanvasClearCommand(main.canvasManager()));
+        registerSubCommand("set", new CanvasSetCommand(main.canvasManager()));
     }
 
     @Override
